@@ -1,7 +1,7 @@
 from moviepy.video.io.VideoFileClip import VideoFileClip
 import cv2 # Pour la détection des scènes
 
-input_path = input("Entrez le nom du fichier texte : ")
+input_path = input("Enter the input video file name: ")
 output_path = "converted.mp4"
 
 video_clip = VideoFileClip(input_path)
