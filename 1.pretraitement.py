@@ -1,3 +1,5 @@
+from moviepy.video.io.VideoFileClip import VideoFileClip
+
 # Ask the user for the input video file path
 
 input_path = input("Enter the input video file name: ")
