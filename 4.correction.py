@@ -62,7 +62,7 @@ def process_file(file_path):
         return corrected_text
 
 # Chemin du fichier texte
-filename = transcription_complete.txt   # Use the converted video as input
+filename = "transcription_complete.txt"   # Use the converted video as input
 
 if not os.path.isfile(filename):
     print(f"Le fichier '{filename}' est introuvable.")
