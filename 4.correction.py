@@ -1,10 +1,3 @@
-import nltk
-from nltk.tokenize import word_tokenize
-from nltk.corpus import stopwords
-from nltk.stem import WordNetLemmatizer
-from transformers import CamembertForMaskedLM, CamembertTokenizer, BertForMaskedLM, BertTokenizer
-import os
-
 nltk.download('punkt')
 nltk.download('stopwords')
 
@@ -69,11 +62,11 @@ def process_file(file_path):
         return corrected_text
 
 # Chemin du fichier texte
-file_path = input("Entrez le nom du fichier texte : ")
+filename = transcription_complete.txt   # Use the converted video as input
 
-if not os.path.isfile(file_path):
-    print("Chemin de fichier invalide.")
+if not os.path.isfile(filename):
+    print(f"Le fichier '{filename}' est introuvable.")
 else:
-    corrected_text = process_file(file_path)
+    corrected_text = process_file(filename)
     print(f"Texte corrigé ({'français' if 'fr' in corrected_text else 'anglais'}):")
     print(corrected_text)
