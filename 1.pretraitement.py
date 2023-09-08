@@ -1,7 +1,8 @@
-from moviepy.video.io.VideoFileClip import VideoFileClip
-import cv2 # Pour la détection des scènes
+# Ask the user for the input video file path
 
 input_path = input("Enter the input video file name: ")
+
+# Video Conversion
 output_path = "converted.mp4"
 
 video_clip = VideoFileClip(input_path)
@@ -11,7 +12,7 @@ compressed_clip.write_videofile(output_path, codec="libx264", audio_codec="aac")
 
 # Detection des scènes
 
-cap = cv2.VideoCapture(input_path)
+cap = cv2.VideoCapture(output_path)      # Use the converted video as input
 ret, prev_frame = cap.read()
 
 while cap.isOpened():
