@@ -1,18 +1,18 @@
 
 # Installez moviepy
-pip3 install moviepy
+pip install moviepy
 
 # Installez opencv-python
-pip3 install opencv-python
+pip install opencv-python
 
 # Installez speech_recognition
-pip3 install SpeechRecognition
+pip install SpeechRecognition
 
 # Installez nltk
-pip3 install nltk
+pip install nltk
 
 # Installez transformers (pytorch-transformers)
-pip3 install transformers
+pip install transformers
 
 # Installez reportlab
-pip3 install reportlab
+pip install reportlab
