@@ -1,11 +1,8 @@
-import speech_recognition as sr
-
-
 # Créez un objet Recognizer
 recognizer = sr.Recognizer()
 
 # Chemin vers le fichier audio
-audio_file = input("Entrez le nom du fichier texte : ")
+audio_file = output_path  # Use the extracted audio as input
 
 # Fonction pour transcrire un segment audio
 def transcribe_segment(segment, language):
@@ -47,4 +44,3 @@ with sr.AudioFile(audio_file) as source:
 # Créez un fichier externe pour contenir la transcription complète
 with open("transcription_complete.txt", "w") as output_file:
     output_file.write(full_text)
-    print("Transcription complète écrite dans le fichier 'transcription_complete.txt'")
