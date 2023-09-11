@@ -1,4 +1,7 @@
+
+
 # Charger la vidéo
+output_path = "converted.mp4"
 video = VideoFileClip(output_path)  # Use the converted video as input
 
 
