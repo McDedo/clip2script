@@ -1,4 +1,3 @@
-<<<<<<< HEAD:docs/1.pretraitement.py
 import tkinter as tk
 from tkinter import filedialog
 from moviepy.video.io.VideoFileClip import VideoFileClip
