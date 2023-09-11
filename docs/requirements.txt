@@ -1,0 +1,18 @@
+
+# Installez moviepy
+pip install moviepy
+
+# Installez opencv-python
+pip install opencv-python
+
+# Installez speech_recognition
+pip install SpeechRecognition
+
+# Installez nltk
+pip install nltk
+
+# Installez transformers (pytorch-transformers)
+pip install transformers
+
+# Installez reportlab
+pip install reportlab
