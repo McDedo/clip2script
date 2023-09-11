@@ -1,7 +1,6 @@
 import tkinter as tk
 from tkinter import filedialog
 from moviepy.video.io.VideoFileClip import VideoFileClip
-import cv2
 from moviepy.editor import VideoFileClip
 import speech_recognition as sr
 import nltk
