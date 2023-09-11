@@ -21,9 +21,6 @@ video_clip = VideoFileClip(input_path)
 # Créez une sous-clip avec la même vidéo
 compressed_clip = video_clip.subclip()
 
-compressed_clip = compressed_clip.resize(width=640)
-compressed_clip = compressed_clip.set_duration(60)
-
 compressed_clip.write_videofile(output_path, codec="libx264", audio_codec="aac")
 
 
