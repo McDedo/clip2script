@@ -1,4 +1,4 @@
-
+import speech_recognition as sr
 
 # Charger la vidéo
 output_path = "converted.mp4"
