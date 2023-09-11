@@ -14,7 +14,7 @@ if not input_path:
     exit()
 
 # Video Conversion
-output_path = "converted.mp4"
+output_path = "input_path\converted.mp4"
 
 video_clip = VideoFileClip(input_path)
 
