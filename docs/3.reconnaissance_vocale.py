@@ -1,12 +1,5 @@
 import speech_recognition as sr
 import string
-import spacy
-
-# Charger le modèle spaCy pour la langue française
-nlp = spacy.load("fr_core_news_sm")
-
-# Charger le modèle spaCy pour la langue anglaise
-nlp = spacy.load("en_core_news_sm")
 
 # Créez un objet Recognizer
 recognizer = sr.Recognizer()
@@ -55,19 +48,6 @@ def capitalize_first_letter(text):
     capitalized_sentences = [sentence.capitalize() for sentence in sentences]
     return ". ".join(capitalized_sentences)
 
-# Fonction pour effectuer la correction orthographique
-def correct_spelling(text):
-    doc = nlp(text)
-    corrected_text = ' '.join([token.text_with_ws for token in doc])
-    return corrected_text
-
-# Fonction pour ajouter de la ponctuation à un texte
-def add_punctuation(text):
-    text = text.translate(str.maketrans('', '', string.punctuation))
-    # Ajoutez la ponctuation à l'endroit approprié
-    text_with_punctuation = text.replace('.', '. ').replace('!', '! ').replace('?', '? ')
-    return text_with_punctuation
-
 # Ouvrez le fichier audio
 with sr.AudioFile(audio_file) as source:
     # Déterminez la durée totale de l'audio
@@ -92,9 +72,7 @@ with sr.AudioFile(audio_file) as source:
     full_text_with_punctuation = add_punctuation_based_on_pauses(full_text)
     # Mettez en majuscules la première lettre de chaque phrase
     full_text_with_capitalization = capitalize_first_letter(full_text_with_punctuation)
-    # Effectuez la correction orthographique
-    full_text_corrected = correct_spelling(full_text_with_capitalization)
-    # Créez un fichier externe pour contenir la transcription complète avec ponctuation, majuscules et correction orthographique
-    with open("transcription_complete_with_punctuation_capitalization_and_correction.txt", "w") as output_file:
-        output_file.write(full_text_corrected)
+    # Créez un fichier externe pour contenir la transcription complète avec ponctuation et majuscules
+    with open("transcription_complete_with_punctuation_and_capitalization.txt", "w") as output_file:
+        output_file.write(full_text_with_capitalization)
 
