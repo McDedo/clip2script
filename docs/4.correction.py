@@ -74,7 +74,7 @@ def process_file(file_path):
 input_filename = "transcription_complete.txt"   # Use the converted video as input
 
 if not os.path.isfile(filename):
-    print(f"Le fichier '{filename}' est introuvable.")
+    print(f"Le fichier '{input_filename}' est introuvable.")
 else:
     # Spécifiez le chemin du fichier de sortie
     output_filename = "texte_corrigé.txt"
