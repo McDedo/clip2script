@@ -5,6 +5,8 @@ from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
 from reportlab.lib import colors
 from nltk.tokenize import sent_tokenize, word_tokenize  # J'ai ajouté word_tokenize pour une utilisation potentielle
 import nltk
+import chardet
+
 
 # Télécharger les données nécessaires pour la segmentation en phrases
 nltk.download('punkt')
@@ -32,8 +34,22 @@ if not os.path.isfile(input_filename):
     print(f"Le fichier '{input_filename}' n'existe pas.")
     exit(1)
 
-# Lire le contenu du fichier texte
-with open(input_filename, 'r') as file:
+# Function to detect file encoding
+def detect_encoding(input_filename):
+    with open(input_filename, 'rb') as file:
+        detector = chardet.universaldetector.UniversalDetector()
+        for line in file:
+            detector.feed(line)
+            if detector.done:
+                break
+        detector.close()
+    return detector.result['encoding']
+
+# Determine the file's encoding
+input_encoding = detect_encoding(input_filename)
+
+# Open the file with the detected encoding
+with open(input_filename, 'r', encoding=input_encoding) as file:
     text = file.read()
 
 # Sélectionner le mode de segmentation (paragraphes ou phrases)
