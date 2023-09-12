@@ -26,7 +26,6 @@ def transcribe_segment(segment, language):
         print("Erreur lors de la demande : {0}".format(e))
         return ""
 
-<<<<<<< HEAD
 # Fonction pour ajouter de la ponctuation en fonction des pauses
 def add_punctuation_based_on_pauses(text, pause_threshold=2.0):
     # Divisez le texte en phrases en fonction des pauses détectées
@@ -61,14 +60,13 @@ def correct_spelling(text):
     doc = nlp(text)
     corrected_text = ' '.join([token.text_with_ws for token in doc])
     return corrected_text
-=======
+
 # Fonction pour ajouter de la ponctuation à un texte
 def add_punctuation(text):
     text = text.translate(str.maketrans('', '', string.punctuation))
     # Ajoutez la ponctuation à l'endroit approprié
     text_with_punctuation = text.replace('.', '. ').replace('!', '! ').replace('?', '? ')
     return text_with_punctuation
->>>>>>> a50ed9175af3483fbc971d86478f22d1d53eb70e
 
 # Ouvrez le fichier audio
 with sr.AudioFile(audio_file) as source:
