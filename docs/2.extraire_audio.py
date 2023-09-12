@@ -11,5 +11,3 @@ audio = video.audio
 output_path = 'extracted_audio.wav'
 audio.write_audiofile(output_path)
 
-video.close()
-audio.close()
