@@ -80,4 +80,3 @@ else:
     output_filename = "texte_corrigé.txt"
    
     process_file(input_filename, output_filename)
-    print(f"Texte corrigé sauvegardé dans '{output_filename}'")
