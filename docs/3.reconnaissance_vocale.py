@@ -1,3 +1,5 @@
+
+
 # Créez un objet Recognizer
 recognizer = sr.Recognizer()
 
