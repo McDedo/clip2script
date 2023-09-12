@@ -56,29 +56,30 @@ def correct_text(text, lang):
     return corrected_text
 
 def process_file(input_filename, output_filename):
-    with open(input_filename, 'rb') as file:
-        # Read the file as binary data
-        raw_text = file.read()
-        try:
-            # Try to decode the text as UTF-8
-            text = raw_text.decode('utf-8')
-        except UnicodeDecodeError:
-            # If there is a decoding error, replace or remove invalid characters
-            text = ''.join(c for c in raw_text.decode('utf-8', errors='ignore') if not unicodedata.category(c).startswith('C'))
-        
-        cleaned_text = clean_text(text)
-        
-        # Language detection (here, simply checking if "fr" or "en" appears in the text)
-        if "fr" in cleaned_text:
-            lang = 'fr'
-        else:
-            lang = 'en'
-        
-        corrected_text = correct_text(cleaned_text, lang)
+    encodings_to_try = ['utf-8', 'latin-1']  # Add more encodings if needed
 
-        # Save the corrected text to an output file
-        with open(output_filename, 'w', encoding='utf-8') as outfile:
-            outfile.write(corrected_text)
+    for encoding in encodings_to_try:
+        try:
+            with open(input_filename, 'r', encoding=encoding) as file:
+                text = file.read()
+                break  # Stop trying encodings once successful
+        except UnicodeDecodeError:
+            continue  # Try the next encoding if decoding fails
+
+    cleaned_text = clean_text(text)
+    
+    # Language detection (here, simply checking if "fr" or "en" appears in the text)
+    if "fr" in cleaned_text:
+        lang = 'fr'
+    else:
+        lang = 'en'
+    
+    corrected_text = correct_text(cleaned_text, lang)
+
+    # Save the corrected text to an output file
+    with open(output_filename, 'w', encoding='utf-8') as outfile:
+        outfile.write(corrected_text)
+
 
 # File paths
 input_filename = "transcription_complete.txt"   # Use the converted video as input
