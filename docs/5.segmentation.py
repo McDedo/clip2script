@@ -6,6 +6,8 @@ from reportlab.lib import colors
 from nltk.tokenize import sent_tokenize, word_tokenize  # J'ai ajouté word_tokenize pour une utilisation potentielle
 import nltk
 import chardet
+import tkinter as tk
+from tkinter import filedialog
 
 
 # Télécharger les données nécessaires pour la segmentation en phrases
@@ -97,10 +99,24 @@ custom_style = ParagraphStyle(
 
 segments = []
 
+# Ask the user to choose the output file location using tkinter file dialog
+root = tk.Tk()
+root.withdraw()  # Hide the main tkinter window
+
+output_filename = filedialog.asksaveasfilename(
+    defaultextension=".pdf",
+    filetypes=[("PDF Files", "*.pdf")],
+    title="Save PDF As"
+)
+# Check if the user canceled the file dialog
+if not output_filename:
+    exit(0)
+
 # Créer des objets Paragraph avec le texte formaté
 for segment_text in formatted_segments:
     segment = Paragraph(segment_text, style=custom_style)
     segments.append(segment)
+
 
 # Construire le document PDF
 doc.build(segments)
