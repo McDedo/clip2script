@@ -1,4 +1,5 @@
 import os
+import nltk
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 from transformers import BertTokenizer, CamembertTokenizer, BertForMaskedLM, CamembertForMaskedLM
