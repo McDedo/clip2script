@@ -1,5 +1,6 @@
 import os
 import nltk
+import torch
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 from transformers import BertTokenizer, CamembertTokenizer, BertForMaskedLM, CamembertForMaskedLM
@@ -8,14 +9,14 @@ nltk.download('punkt')
 nltk.download('stopwords')
 
 def clean_text(text):
-    # Tokenisation
+    # Tokenization
     tokens = word_tokenize(text)
-    # Suppression de la ponctuation et des caractères non alphabétiques
+    # Remove punctuation and non-alphabetic characters
     tokens = [word for word in tokens if word.isalpha()]
-    # Conversion en minuscules
+    # Convert to lowercase
     tokens = [word.lower() for word in tokens]
-    # Suppression des mots vides
-    stop_words = set(stopwords.words('english'))  # Utilisation des mots vides en anglais
+    # Remove stop words
+    stop_words = set(stopwords.words('english'))  # Using English stop words
     tokens = [word for word in tokens if word not in stop_words]
     cleaned_text = ' '.join(tokens)
     return cleaned_text
@@ -30,17 +31,17 @@ def correct_text(text, lang):
     else:
         raise ValueError("Langue non prise en charge")
     
-    # Tokenisation du texte
+    # Tokenization of the text
     tokens = tokenizer.tokenize(text)
     
-    # Remplacement de chaque token par la suggestion la plus probable du modèle
+    # Replace each token with the model's most likely suggestion
     corrected_tokens = []
     for token in tokens:
         if token == tokenizer.mask_token:
-            # Le modèle utilise un masque pour la prédiction de mots manquants
-            # Remplacez le masque par la suggestion la plus probable
-            input_text = ' '.join(corrected_tokens)  # Texte jusqu'à présent
-            masked_text = f"{input_text} {tokenizer.mask_token} {token}"  # Texte masqué
+            # The model uses a mask for predicting missing words
+            # Replace the mask with the most likely suggestion
+            input_text = ' '.join(corrected_tokens)  # Text so far
+            masked_text = f"{input_text} {tokenizer.mask_token} {token}"  # Masked text
             input_ids = tokenizer.encode(masked_text, return_tensors='pt')
             with torch.no_grad():
                 logits = model(input_ids)[0]
@@ -53,12 +54,12 @@ def correct_text(text, lang):
     corrected_text = ' '.join(corrected_tokens)
     return corrected_text
 
-def process_file(file_path):
-    with open(file_path, 'r', encoding='utf-8') as file:
+def process_file(input_filename, output_filename):
+    with open(input_filename, 'r', encoding='utf-8') as file:
         text = file.read()
         cleaned_text = clean_text(text)
         
-        # Détection de la langue (ici, simplement en vérifiant si "fr" ou "en" apparaît dans le texte)
+        # Language detection (here, simply checking if "fr" or "en" appears in the text)
         if "fr" in cleaned_text:
             lang = 'fr'
         else:
@@ -66,18 +67,18 @@ def process_file(file_path):
         
         corrected_text = correct_text(cleaned_text, lang)
 
-# Sauvegarde du texte corrigé dans un fichier de sortie
-        with open(output_file, 'w', encoding='utf-8') as outfile:
+        # Save the corrected text to an output file
+        with open(output_filename, 'w', encoding='utf-8') as outfile:
             outfile.write(corrected_text)
-        
-# Chemin du fichier texte
+
+# File paths
 input_filename = "transcription_complete.txt"   # Use the converted video as input
 
 if not os.path.isfile(input_filename):
     print(f"Le fichier '{input_filename}' est introuvable.")
 else:
-    # Spécifiez le chemin du fichier de sortie
+    # Specify the path for the output file
     output_filename = "texte_corrigé.txt"
    
-    process_file(input_filename, output_filename)
-    print(f"Texte corrigé sauvegardé dans '{output_filename}'")
+    process_file(input_filename, output_filename)  # Call the function with both input and output filenames
+
