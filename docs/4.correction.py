@@ -1,3 +1,9 @@
+import os
+import torch
+from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords
+from transformers import BertTokenizer, CamembertTokenizer, BertForMaskedLM, CamembertForMaskedLM
+
 nltk.download('punkt')
 nltk.download('stopwords')
 
@@ -59,14 +65,19 @@ def process_file(file_path):
             lang = 'en'
         
         corrected_text = correct_text(cleaned_text, lang)
-        return corrected_text
 
+# Sauvegarde du texte corrigé dans un fichier de sortie
+        with open(output_file, 'w', encoding='utf-8') as outfile:
+            outfile.write(corrected_text)
+        
 # Chemin du fichier texte
-filename = "transcription_complete.txt"   # Use the converted video as input
+input_filename = "transcription_complete.txt"   # Use the converted video as input
 
 if not os.path.isfile(filename):
     print(f"Le fichier '{filename}' est introuvable.")
 else:
-    corrected_text = process_file(filename)
-    print(f"Texte corrigé ({'français' if 'fr' in corrected_text else 'anglais'}):")
-    print(corrected_text)
+    # Spécifiez le chemin du fichier de sortie
+    output_filename = "texte_corrigé.txt"
+   
+    process_file(input_filename, output_filename)
+    print(f"Texte corrigé sauvegardé dans '{output_filename}'")
