@@ -1,4 +1,4 @@
-
+import speech_recognition as sr
 
 # Créez un objet Recognizer
 recognizer = sr.Recognizer()
