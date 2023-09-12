@@ -27,7 +27,7 @@ def segment_text(text, separator='\n\n', segment_into=('paragraphs', 'sentences'
     
     return segments
 
-input_filename = "texte_corrigé.txt"
+input_filename = "transcription_complete.txt"
 
 # Vérifier si le fichier d'entrée existe
 if not os.path.isfile(input_filename):
@@ -52,15 +52,12 @@ input_encoding = detect_encoding(input_filename)
 with open(input_filename, 'r', encoding=input_encoding) as file:
     text = file.read()
 
-# Sélectionner le mode de segmentation (paragraphes ou phrases)
-segment_into = input("Segmenter en 'paragraphes' ou 'phrases' ? : ").strip().lower()
+# Segmenter le texte en paragraphes et en phrases
+paragraphs = segment_text(text, separator='\n\n', segment_into=['paragraphs'])
+sentences = segment_text(text, segment_into=['sentences'])
 
-# Segmenter le texte en paragraphes ou phrases en utilisant un séparateur personnalisé
-separator = '\n\n'  # Séparateur par défaut pour les paragraphes
-if segment_into == 'phrases':
-    formatted_segments = segment_text(text, segment_into='sentences')
-else:
-    formatted_segments = segment_text(text, separator, segment_into='paragraphs')
+# Combiner les résultats
+formatted_segments = paragraphs + sentences
 
 # Nom du fichier de sortie PDF
 output_filename = input("Entrez le nom du fichier de sortie PDF : ")
