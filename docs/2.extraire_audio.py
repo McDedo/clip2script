@@ -1,4 +1,4 @@
-import speech_recognition as sr
+from moviepy.editor import VideoFileClip
 
 # Charger la vidéo
 output_path = "converted.mp4"
