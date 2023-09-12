@@ -1,3 +1,11 @@
+import os
+from reportlab.lib.pagesizes import letter
+from reportlab.platypus import SimpleDocTemplate, Paragraph
+from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
+from reportlab.lib import colors
+from nltk.tokenize import sent_tokenize, word_tokenize  # word_tokenize pour une utilisation potentielle
+import nltk
+
 nltk.download('punkt')  # Télécharger les données nécessaires pour la segmentation en phrases
 
 from nltk.tokenize import sent_tokenize
