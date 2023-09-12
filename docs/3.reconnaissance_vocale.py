@@ -4,7 +4,7 @@ import speech_recognition as sr
 recognizer = sr.Recognizer()
 
 # Chemin vers le fichier audio
-audio_file = output_path  # Use the extracted audio as input
+audio_file = 'extracted_audio.wav'  # Use the extracted audio as input
 
 # Fonction pour transcrire un segment audio
 def transcribe_segment(segment, language):
