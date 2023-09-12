@@ -81,7 +81,3 @@ else:
     output_filename = "texte_corrigé.txt"
    
     process_file(input_filename, output_filename)  # Call the function with both input and output filenames
-<<<<<<< HEAD
-
-=======
->>>>>>> ad7c2f1a10f383c248436ef59d567ee3162508dd
