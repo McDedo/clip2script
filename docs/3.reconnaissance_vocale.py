@@ -1,5 +1,12 @@
 import speech_recognition as sr
 import string
+import spacy
+
+# Charger le modèle spaCy pour la langue française
+nlp = spacy.load("fr_core_news_sm")
+
+# Charger le modèle spaCy pour la langue anglaise
+nlp = spacy.load("en_core_news_sm")
 
 # Créez un objet Recognizer
 recognizer = sr.Recognizer()
@@ -19,13 +26,40 @@ def transcribe_segment(segment, language):
         print("Erreur lors de la demande : {0}".format(e))
         return ""
 
-# Fonction pour ajouter de la ponctuation à un texte
-def add_punctuation(text):
-    # Supprimez la ponctuation de la sortie de la reconnaissance vocale (car elle ne contient pas de ponctuation)
-    text = text.translate(str.maketrans('', '', string.punctuation))
-    # Ajoutez la ponctuation à l'endroit approprié
-    text_with_punctuation = text.replace('.', '. ').replace('!', '! ').replace('?', '? ')
-    return text_with_punctuation
+# Fonction pour ajouter de la ponctuation en fonction des pauses
+def add_punctuation_based_on_pauses(text, pause_threshold=2.0):
+    # Divisez le texte en phrases en fonction des pauses détectées
+    sentences = []
+    current_sentence = []
+    total_pause_duration = 0.0
+    for word in text.split():
+        if word.endswith('.'):
+            current_sentence.append(word)
+            sentences.append(' '.join(current_sentence))
+            current_sentence = []
+            total_pause_duration = 0.0
+        else:
+            current_sentence.append(word)
+            total_pause_duration += len(word) * 0.04  # Estimation de la durée en secondes par mot (peut nécessiter un ajustement)
+
+            if total_pause_duration >= pause_threshold:
+                sentences.append(' '.join(current_sentence))
+                current_sentence = []
+                total_pause_duration = 0.0
+
+    return ' '.join(sentences)
+
+# Fonction pour mettre en majuscules la première lettre de chaque phrase
+def capitalize_first_letter(text):
+    sentences = text.split(". ")
+    capitalized_sentences = [sentence.capitalize() for sentence in sentences]
+    return ". ".join(capitalized_sentences)
+
+# Fonction pour effectuer la correction orthographique
+def correct_spelling(text):
+    doc = nlp(text)
+    corrected_text = ' '.join([token.text_with_ws for token in doc])
+    return corrected_text
 
 # Ouvrez le fichier audio
 with sr.AudioFile(audio_file) as source:
@@ -47,9 +81,13 @@ with sr.AudioFile(audio_file) as source:
             # Transcrire le segment et ajouter le texte au résultat complet
             segment_text = transcribe_segment(segment, language)
             full_text += segment_text + " "
-    # Ajoutez de la ponctuation à la transcription complète
-    full_text_with_punctuation = add_punctuation(full_text)
-    # Créez un fichier externe pour contenir la transcription complète avec ponctuation
-    with open("transcription_complete_with_punctuation.txt", "w") as output_file:
-        output_file.write(full_text_with_punctuation)
+    # Ajoutez de la ponctuation en fonction des pauses à la transcription complète
+    full_text_with_punctuation = add_punctuation_based_on_pauses(full_text)
+    # Mettez en majuscules la première lettre de chaque phrase
+    full_text_with_capitalization = capitalize_first_letter(full_text_with_punctuation)
+    # Effectuez la correction orthographique
+    full_text_corrected = correct_spelling(full_text_with_capitalization)
+    # Créez un fichier externe pour contenir la transcription complète avec ponctuation, majuscules et correction orthographique
+    with open("transcription_complete_with_punctuation_capitalization_and_correction.txt", "w") as output_file:
+        output_file.write(full_text_corrected)
 
