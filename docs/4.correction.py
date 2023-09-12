@@ -4,6 +4,7 @@ import unicodedata
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 from transformers import BertTokenizer, CamembertTokenizer, BertForMaskedLM, CamembertForMaskedLM
+from transformers import TFCamembertTokenizer, TFCamembertForMaskedLM
 
 nltk.download('punkt')
 nltk.download('stopwords')
@@ -23,8 +24,8 @@ def clean_text(text):
 
 def correct_text(text, lang):
     if lang == 'fr':
-        tokenizer = CamembertTokenizer.from_pretrained("camembert-base")
-        model = CamembertForMaskedLM.from_pretrained("camembert-base")
+        tokenizer = TFCamembertTokenizer.from_pretrained("camembert-base")
+        model = TFCamembertForMaskedLM.from_pretrained("camembert-base")
     elif lang == 'en':
         tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
         model = BertForMaskedLM.from_pretrained("bert-base-uncased")
