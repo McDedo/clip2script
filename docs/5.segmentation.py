@@ -3,12 +3,11 @@ from reportlab.lib.pagesizes import letter
 from reportlab.platypus import SimpleDocTemplate, Paragraph
 from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
 from reportlab.lib import colors
-from nltk.tokenize import sent_tokenize, word_tokenize  # word_tokenize pour une utilisation potentielle
+from nltk.tokenize import sent_tokenize, word_tokenize  # J'ai ajouté word_tokenize pour une utilisation potentielle
 import nltk
 
-nltk.download('punkt')  # Télécharger les données nécessaires pour la segmentation en phrases
-
-from nltk.tokenize import sent_tokenize
+# Télécharger les données nécessaires pour la segmentation en phrases
+nltk.download('punkt')
 
 # Fonction pour segmenter un texte en paragraphes ou phrases
 def segment_text(text, separator='\n\n', segment_into='paragraphs'):
@@ -49,6 +48,21 @@ if os.path.isfile(output_filename):
     if response != 'o':
         exit(1)
 
+# Demander à l'utilisateur de personnaliser la police et la taille (avec des valeurs par défaut)
+font_name = input("Entrez le nom de la police (ou appuyez sur Entrée pour utiliser la police par défaut) : ").strip()
+font_size = input("Entrez la taille de la police (ou appuyez sur Entrée pour utiliser la taille par défaut) : ").strip()
+
+if not font_name:
+    font_name = 'Helvetica'  # Police par défaut
+if not font_size:
+    font_size = 12  # Taille par défaut
+
+try:
+    font_size = float(font_size)
+except ValueError:
+    print("La taille de la police doit être un nombre valide.")
+    exit(1)
+
 doc = SimpleDocTemplate(output_filename, pagesize=letter)
 styles = getSampleStyleSheet()
 
@@ -56,9 +70,9 @@ styles = getSampleStyleSheet()
 custom_style = ParagraphStyle(
     name='CustomStyle',
     parent=styles['Normal'],
-    fontName=input("Entrez le nom de la police : "),  # Nom de la police
-    fontSize=float(input("Entrez la taille de la police : ")),  # Taille de la police
-    textColor=colors.black  # Couleur du texte (modifiable si nécessaire)
+    fontName=font_name,
+    fontSize=font_size,
+    textColor=colors.black
 )
 
 segments = []
