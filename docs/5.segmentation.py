@@ -11,7 +11,7 @@ def segment_text(text, separator='\n\n', segment_into='paragraphs'):
     else:
         raise ValueError("L'argument 'segment_into' doit être 'paragraphs' ou 'sentences'.")
 
-input_filename = "transcription_complete.txt"
+input_filename = "texte_corrigé.txt"
 
 # Vérifier si le fichier d'entrée existe
 if not os.path.isfile(input_filename):
