@@ -9,14 +9,21 @@ import nltk
 # Télécharger les données nécessaires pour la segmentation en phrases
 nltk.download('punkt')
 
-# Fonction pour segmenter un texte en paragraphes ou phrases
-def segment_text(text, separator='\n\n', segment_into='paragraphs'):
-    if segment_into == 'paragraphs':
-        return text.split(separator)
-    elif segment_into == 'sentences':
-        return sent_tokenize(text)
-    else:
-        raise ValueError("L'argument 'segment_into' doit être 'paragraphs' ou 'sentences'.")
+# Fonction pour segmenter un texte en paragraphes et/ou phrases
+def segment_text(text, separator='\n\n', segment_into=('paragraphs', 'sentences')):
+    if not set(segment_into).issubset({'paragraphs', 'sentences'}):
+        raise ValueError("Les éléments de 'segment_into' doivent être 'paragraphs' et/ou 'sentences'.")
+
+    segments = []
+    if 'paragraphs' in segment_into:
+        paragraphs = text.split(separator)
+        segments.extend(paragraphs)
+    
+    if 'sentences' in segment_into:
+        sentences = sent_tokenize(text)
+        segments.extend(sentences)
+    
+    return segments
 
 input_filename = "texte_corrigé.txt"
 
