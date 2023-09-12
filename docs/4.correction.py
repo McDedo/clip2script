@@ -1,5 +1,6 @@
 import os
 import nltk
+import unicodedata
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 from transformers import BertTokenizer, CamembertTokenizer, BertForMaskedLM, CamembertForMaskedLM
@@ -54,8 +55,16 @@ def correct_text(text, lang):
     return corrected_text
 
 def process_file(input_filename, output_filename):
-    with open(input_filename, 'r', encoding='utf-8') as file:
-        text = file.read()
+    with open(input_filename, 'rb') as file:
+        # Read the file as binary data
+        raw_text = file.read()
+        try:
+            # Try to decode the text as UTF-8
+            text = raw_text.decode('utf-8')
+        except UnicodeDecodeError:
+            # If there is a decoding error, replace or remove invalid characters
+            text = ''.join(c for c in raw_text.decode('utf-8', errors='ignore') if not unicodedata.category(c).startswith('C'))
+        
         cleaned_text = clean_text(text)
         
         # Language detection (here, simply checking if "fr" or "en" appears in the text)
@@ -79,4 +88,5 @@ else:
     # Specify the path for the output file
     output_filename = "texte_corrigé.txt"
    
-    process_file(input_filename, output_filename)  # Call the function with both input and output filenames
+    process_file(input_filename, output_filename)  # Call the function with both input and output filenames.
+
