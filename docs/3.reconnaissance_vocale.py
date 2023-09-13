@@ -73,6 +73,6 @@ with sr.AudioFile(audio_file) as source:
     # Mettez en majuscules la première lettre de chaque phrase
     full_text_with_capitalization = capitalize_first_letter(full_text_with_punctuation)
     # Créez un fichier externe pour contenir la transcription complète avec ponctuation et majuscules
-    with open("transcription_complete_with_punctuation_and_capitalization.txt", "w") as output_file:
+    with open("transcription_complete.txt", "w") as output_file:
         output_file.write(full_text_with_capitalization)
 
