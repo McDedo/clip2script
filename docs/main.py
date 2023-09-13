@@ -85,6 +85,7 @@ with sr.AudioFile(audio_file) as source:
     full_text_with_capitalization = capitalize_first_letter(full_text_with_punctuation)
     with open("transcription_complete.txt", "w") as output_file:
         output_file.write(full_text_with_capitalization)
+        
         # Partie 4: Génération de PDF
 nltk.download('punkt')
 def segment_text(text, separator='\n\n', segment_into=('paragraphs', 'sentences')):
