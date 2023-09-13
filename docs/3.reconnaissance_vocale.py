@@ -21,7 +21,6 @@ def transcribe_segment(segment, language):
 
 # Fonction pour ajouter de la ponctuation à un texte
 def add_punctuation(text):
-    # Supprimez la ponctuation de la sortie de la reconnaissance vocale (car elle ne contient pas de ponctuation)
     text = text.translate(str.maketrans('', '', string.punctuation))
     # Ajoutez la ponctuation à l'endroit approprié
     text_with_punctuation = text.replace('.', '. ').replace('!', '! ').replace('?', '? ')
