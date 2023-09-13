@@ -61,6 +61,15 @@ sentences = segment_text(text, segment_into=['sentences'])
 # Combiner les résultats
 formatted_segments = paragraphs + sentences
 
+# Nom du fichier de sortie PDF
+output_filename = input("Entrez le nom du fichier de sortie PDF : ")
+
+# Vérifier si le fichier de sortie existe déjà
+if os.path.isfile(output_filename):
+    response = input(f"Le fichier '{output_filename}' existe déjà. Voulez-vous le remplacer ? (O/N) : ").strip().lower()
+    if response != 'o':
+        exit(1)
+
 # Demander à l'utilisateur de personnaliser la police et la taille (avec des valeurs par défaut)
 font_name = input("Entrez le nom de la police (ou appuyez sur Entrée pour utiliser la police par défaut) : ").strip()
 font_size = input("Entrez la taille de la police (ou appuyez sur Entrée pour utiliser la taille par défaut) : ").strip()
@@ -90,33 +99,21 @@ custom_style = ParagraphStyle(
 
 segments = []
 
-# Ask the user to choose the output file location using tkinter file dialog
-root = tk.Tk()
-root.withdraw()  # Hide the main tkinter window
+# Demander à l'utilisateur de choisir l'emplacement du fichier de sortie
+root = Tk()
+root.withdraw()  # Cache la fenêtre principale de tkinter
 
-# Nom du fichier de sortie PDF
-output_filename = input("Entrez le nom du fichier de sortie PDF : ")
+output_filename = filedialog.asksaveasfilename(defaultextension=".pdf", filetypes=[("PDF files", "*.pdf")])
 
-# Vérifier si le fichier de sortie existe déjà
-if os.path.isfile(output_filename):
-    response = input(f"Le fichier '{output_filename}' existe déjà. Voulez-vous le remplacer ? (O/N) : ").strip().lower()
-    if response != 'o':
-        exit(1)
-
-output_filename = filedialog.asksaveasfilename(
-    defaultextension=".pdf",
-    filetypes=[("PDF Files", "*.pdf")],
-    title="Save PDF As"
-)
-# Check if the user canceled the file dialog
+# Vérifier si l'utilisateur a annulé la boîte de dialogue
 if not output_filename:
-    exit(0)
+    print("L'emplacement du fichier de sortie n'a pas été spécifié.")
+    exit(1)
 
 # Créer des objets Paragraph avec le texte formaté
 for segment_text in formatted_segments:
     segment = Paragraph(segment_text, style=custom_style)
     segments.append(segment)
-
 
 # Construire le document PDF
 doc.build(segments)
