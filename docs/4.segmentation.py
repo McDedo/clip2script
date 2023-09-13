@@ -61,15 +61,6 @@ sentences = segment_text(text, segment_into=['sentences'])
 # Combiner les résultats
 formatted_segments = paragraphs + sentences
 
-# Nom du fichier de sortie PDF
-output_filename = input("Entrez le nom du fichier de sortie PDF : ")
-
-# Vérifier si le fichier de sortie existe déjà
-if os.path.isfile(output_filename):
-    response = input(f"Le fichier '{output_filename}' existe déjà. Voulez-vous le remplacer ? (O/N) : ").strip().lower()
-    if response != 'o':
-        exit(1)
-
 # Demander à l'utilisateur de personnaliser la police et la taille (avec des valeurs par défaut)
 font_name = input("Entrez le nom de la police (ou appuyez sur Entrée pour utiliser la police par défaut) : ").strip()
 font_size = input("Entrez la taille de la police (ou appuyez sur Entrée pour utiliser la taille par défaut) : ").strip()
@@ -102,6 +93,15 @@ segments = []
 # Ask the user to choose the output file location using tkinter file dialog
 root = tk.Tk()
 root.withdraw()  # Hide the main tkinter window
+
+# Nom du fichier de sortie PDF
+output_filename = input("Entrez le nom du fichier de sortie PDF : ")
+
+# Vérifier si le fichier de sortie existe déjà
+if os.path.isfile(output_filename):
+    response = input(f"Le fichier '{output_filename}' existe déjà. Voulez-vous le remplacer ? (O/N) : ").strip().lower()
+    if response != 'o':
+        exit(1)
 
 output_filename = filedialog.asksaveasfilename(
     defaultextension=".pdf",
