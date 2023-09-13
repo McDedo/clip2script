@@ -14,10 +14,10 @@ def transcribe_segment(segment, language):
         text = recognizer.recognize_google(segment, language=language)
         return text
     except sr.UnknownValueError:
-        return ""
+        return None
     except sr.RequestError as e:
         print("Erreur lors de la demande : {0}".format(e))
-        return ""
+        return None
 
 # Fonction pour ajouter de la ponctuation en fonction des pauses
 def add_punctuation_based_on_pauses(text, pause_threshold=1.0):
