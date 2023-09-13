@@ -27,7 +27,7 @@ def segment_text(text, separator='\n\n', segment_into=('paragraphs', 'sentences'
     
     return segments
 
-input_filename = "texte_corrigé.txt"
+input_filename = "transcription_complete.txt"
 
 # Vérifier si le fichier d'entrée existe
 if not os.path.isfile(input_filename):
