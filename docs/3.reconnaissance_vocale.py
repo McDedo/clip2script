@@ -20,7 +20,7 @@ def transcribe_segment(segment, language):
         return ""
 
 # Fonction pour ajouter de la ponctuation en fonction des pauses
-def add_punctuation_based_on_pauses(text, pause_threshold=2.0):
+def add_punctuation_based_on_pauses(text, pause_threshold=1.0):
     # Divisez le texte en phrases en fonction des pauses détectées
     sentences = []
     current_sentence = []
