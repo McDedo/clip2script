@@ -46,7 +46,7 @@ def transcribe_segment(segment, language):
     except sr.RequestError as e:
         print("Erreur lors de la demande : {0}".format(e))
         return ""
-def add_punctuation_based_on_pauses(text, pause_threshold=2.0):
+def add_punctuation_based_on_pauses(text, pause_threshold=1.0):
     sentences = []
     current_sentence = []
     total_pause_duration = 0.0
@@ -70,7 +70,7 @@ def capitalize_first_letter(text):
     return ". ".join(capitalized_sentences)
 with sr.AudioFile(audio_file) as source:
     audio_duration = source.DURATION
-    segment_duration = 30
+    segment_duration = 15
     total_segments = int(audio_duration / segment_duration) + 1
     languages = ["fr-FR", "en-US"]
     full_text = ""
