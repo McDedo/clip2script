@@ -70,7 +70,7 @@ def capitalize_first_letter(text):
     return ". ".join(capitalized_sentences)
 with sr.AudioFile(audio_file) as source:
     audio_duration = source.DURATION
-    segment_duration = 15
+    segment_duration = 5
     total_segments = int(audio_duration / segment_duration) + 1
     languages = ["fr-FR", "en-US"]
     full_text = ""
@@ -161,12 +161,6 @@ custom_style = ParagraphStyle(
     textColor=colors.black
 )
 segments = []
-root = tk.Tk()
-root.withdraw() 
-output_filename = filedialog.asksaveasfilename(defaultextension=".pdf", filetypes=[("PDF files", "*.pdf")])
-if not output_filename:
-    print("L'emplacement du fichier de sortie n'a pas été spécifié.")
-    exit(1)
 for segment_text in formatted_segments:
     segment = Paragraph(segment_text, style=custom_style)
     segments.append(segment)
