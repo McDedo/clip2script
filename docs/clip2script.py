@@ -161,7 +161,7 @@ custom_style = ParagraphStyle(
     textColor=colors.black
 )
 segments = []
-root = Tk()
+root = tk.Tk()
 root.withdraw() 
 output_filename = filedialog.asksaveasfilename(defaultextension=".pdf", filetypes=[("PDF files", "*.pdf")])
 if not output_filename:
