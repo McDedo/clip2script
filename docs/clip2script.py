@@ -70,7 +70,7 @@ def capitalize_first_letter(text):
     return ". ".join(capitalized_sentences)
 with sr.AudioFile(audio_file) as source:
     audio_duration = source.DURATION
-    segment_duration = 5
+    segment_duration = 60
     total_segments = int(audio_duration / segment_duration) + 1
     languages = ["fr-FR", "en-US"]
     full_text = ""
