@@ -100,7 +100,7 @@ custom_style = ParagraphStyle(
 segments = []
 
 # Demander à l'utilisateur de choisir l'emplacement du fichier de sortie
-root = Tk()
+root = tk.Tk()
 root.withdraw()  # Cache la fenêtre principale de tkinter
 
 output_filename = filedialog.asksaveasfilename(defaultextension=".pdf", filetypes=[("PDF files", "*.pdf")])
