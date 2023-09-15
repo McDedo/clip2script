@@ -53,7 +53,7 @@ with sr.AudioFile(audio_file) as source:
     # Déterminez la durée totale de l'audio
     audio_duration = source.DURATION
     # Définissez la durée maximale d'un segment (en secondes)
-    segment_duration = 15
+    segment_duration = 60
     # Calculez le nombre total de segments nécessaires
     total_segments = int(audio_duration / segment_duration) + 1
     # Transcrire chaque segment
