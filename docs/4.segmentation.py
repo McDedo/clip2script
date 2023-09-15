@@ -99,17 +99,6 @@ custom_style = ParagraphStyle(
 
 segments = []
 
-# Demander à l'utilisateur de choisir l'emplacement du fichier de sortie
-root = tk.Tk()
-root.withdraw()  # Cache la fenêtre principale de tkinter
-
-output_filename = filedialog.asksaveasfilename(defaultextension=".pdf", filetypes=[("PDF files", "*.pdf")])
-
-# Vérifier si l'utilisateur a annulé la boîte de dialogue
-if not output_filename:
-    print("L'emplacement du fichier de sortie n'a pas été spécifié.")
-    exit(1)
-
 # Créer des objets Paragraph avec le texte formaté
 for segment_text in formatted_segments:
     segment = Paragraph(segment_text, style=custom_style)
